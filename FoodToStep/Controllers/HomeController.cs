@@ -17,7 +17,7 @@ using FoodToStep.Models.Object;
 namespace FoodToStep.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("server/API/[controller]")]
     public class HomeController : ControllerBase, AndroidAPI
     {
         HomeContext Context = new HomeContext(new DbContextOptions<HomeContext>());
