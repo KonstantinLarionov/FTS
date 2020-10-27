@@ -1,4 +1,5 @@
-﻿using FoodToStep.Models.ObjectDTO;
+﻿using FoodToStep.Models.Configs;
+using FoodToStep.Models.ObjectDTO;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -17,7 +18,7 @@ namespace FoodToStep.Models
         public HomeContext(DbContextOptions<HomeContext> options) : base(options) { }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseMySql("Server=localhost;Database=u0855482_Memorial;User=u0855_adminsql;Password=092g#Hka;");
+            optionsBuilder.UseMySql(ConfigDB.ConnectionSting);
             base.OnConfiguring(optionsBuilder);
         }
     }

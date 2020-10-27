@@ -3,21 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using FoodToStep.Controllers.Interface;
+using FoodToStep.Models;
+using FoodToStep.Models.Enums;
+using FoodToStep.Models.ObjectDTO;
+using FoodToStep.Models.Extensions;
+
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
+using FoodToStep.Models.Object;
 
 namespace FoodToStep.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class HomeController : ControllerBase
+    public class HomeController : ControllerBase, AndroidAPI
     {
-        private readonly ILogger<HomeController> _logger;
+        HomeContext Context = new HomeContext(new DbContextOptions<HomeContext>());
+        public HomeController()
+        { }
 
-        public HomeController(ILogger<HomeController> logger)
+        [HttpGet(Name = "GetFood")]
+        [Route("GetFood")]
+        public JsonResult GetFood([FromHeader] FoodTypeGet food)
         {
-            _logger = logger;
-        }
+            FoodType type = food.foodType.GetEnum<FoodType>();
 
+            List<FoodDTO> foodDTO = null;
+            foodDTO = Context.Foods.Where(x => x.Type == type).ToList();
+            return new JsonResult(foodDTO);
+        }
     }
 }
